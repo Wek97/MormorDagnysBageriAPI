@@ -1,0 +1,18 @@
+[
+    {
+        "supplierName": "Axfood",
+        "address": "gatgatan 1",
+        "contactPerson": "Stefan Kontakt",
+        "city": "Citystaden",
+        "phone": "555-4510241",
+        "email": "axfood@gmail.com"
+    },
+    {
+        "supplierName": "Williams Råvara AB",
+        "address": "vägvägen 2",
+        "contactPerson": "Jag William",
+        "city": "Jönköping",
+        "phone": "036-1250067",
+        "email": "williamsravara@outlook.com"
+    }
+]

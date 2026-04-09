@@ -2,7 +2,7 @@
 
 namespace MormorDagnysBageri;
 
-public record class SupplierProduct
+public class SupplierProduct
 {
     public int SupplierId { get; set; }
     public int ProductId { get; set; }

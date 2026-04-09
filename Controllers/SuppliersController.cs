@@ -17,37 +17,35 @@ public class SuppliersController(MormorDagnysContext context) : ControllerBase
         return Ok(new {Success = true, StatusCode = 200, Items = suppliers.Count, Data = suppliers});
     }
 
-    [HttpGet("search")]
-    public async Task<ActionResult> SearchSupplier(string name)
+    [HttpGet("{supplierId}")]
+    public async Task<ActionResult> GetSupplierWithProducts(int supplierId)
     {
-        Supplier supplier = await context.Suppliers
-            .Include(s => s.Products)
-            .SingleOrDefaultAsync(s => s.SupplierName == name);
-        if (supplier is null) return NotFound();
-
-        var supplierToReturn = new
-        {
-            supplier.SupplierId,
-            supplier.SupplierName,
-            Products = supplier.Products.Select(p => new
+        var supplier = await context.Suppliers
+            .Where(s => s.SupplierId == supplierId)
+            .Select(s => new
             {
-                p.ItemNumber,
-                p.ProductName,
-                p.PricePerKg,
-                p.Description
+                s.SupplierId,
+                s.SupplierName,
+                s.Address,
+                s.ContactPerson,
+                s.City,
+                s.Phone,
+                s.Email,
+                Products = s.SupplierProducts.Select(sp => new
+                {
+                    sp.ProductId,
+                    sp.Product.ProductName,
+                    sp.PricePerKg
+                }).ToList()
             })
-        };
-        return Ok(new {Success = true, StatusCode = 200, Items = 1, Data = supplierToReturn});
-        
+            .FirstOrDefaultAsync();
+
+        if (supplier is null) return NotFound ("Leverantör hittas ej");
+
+        return Ok(supplier);
     }
 
-    [HttpPost()]
-    public async Task<ActionResult> AddSupplier(Supplier supplier)
-    {
-        context.Suppliers.Add(supplier);
-        await context.SaveChangesAsync();
-        return CreatedAtAction(nameof(SearchSupplier), new { id = supplier.SupplierId }, supplier);
-    }
+    
 }
     
         

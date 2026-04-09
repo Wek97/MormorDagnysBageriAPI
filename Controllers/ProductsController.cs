@@ -18,10 +18,7 @@ public class ProductsController(MormorDagnysContext context) : ControllerBase
             .Select(p => new
             {
                 p.ItemNumber,
-                p.Description,
-                p.PricePerKg,
-                p.ProductName,
-                p.ImageUrl
+                p.ProductName
             })
             .SingleOrDefaultAsync();
         if (product is not null)

@@ -1,0 +1,17 @@
+[
+    {
+        "supplierId": 1,
+        "productId": 1,
+        "pricePerKg": 14.90
+    },
+    {
+        "supplierId": 2,
+        "productId": 1,
+        "pricePerKg": 15.50
+    },
+    {
+        "supplierId": 1,
+        "productId": 2,
+        "pricePerKg": 11.90
+    }
+]

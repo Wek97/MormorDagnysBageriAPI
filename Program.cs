@@ -14,6 +14,9 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+var seedDatabase = new SeedDatabase();
+await seedDatabase.InitDb(app);
+
 app.MapControllers();
 
 app.Run();
