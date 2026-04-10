@@ -10,23 +10,48 @@ namespace MyApp.Namespace;
 [ApiController]
 public class ProductsController(MormorDagnysContext context) : ControllerBase
 {
-    [HttpGet("{id}")]
-    public async Task<ActionResult> FindProduct(int id)
+    [HttpGet()]
+    public async Task<ActionResult> ListAllProducts()
     {
-        var product = await context.Products
-            .Where(c => c.Id == id)
+        var products = await context.Products
             .Select(p => new
             {
+                p.Id,
                 p.ItemNumber,
                 p.ProductName
             })
-            .SingleOrDefaultAsync();
-        if (product is not null)
-        {
-            return Ok(new { Success = true, StatusCode = 1337, items = 1, Data = product});
-        }
+            .ToListAsync();
 
-        return NotFound();
+            return Ok(new {Success = true, StatusCode = 200, Items = products.Count, Data = products});
+    }
+
+
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult> FindProductWithSupplier(int id)
+    {
+        var product = await context.Products
+            .Where(p => p.Id == id)
+            .Select(p => new
+            {
+                p.Id,
+                p.ItemNumber,
+                p.ProductName,
+                Suppliers = p.SupplierProducts.Select(sp => new
+                {
+                    sp.Supplier.SupplierId,
+                    sp.Supplier.SupplierName,
+                    sp.Supplier.Email,
+                    sp.PricePerKg
+                }).ToList()
+            })
+            .SingleOrDefaultAsync();
+
+        if (product is null) return NotFound("Produkten hittades inte");
+        
+        return Ok(new {Success = true, StatusCode = 200, Items = 1, Data = product});
+
+        
     }
 }
     

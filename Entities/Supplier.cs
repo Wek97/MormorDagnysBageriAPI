@@ -1,6 +1,4 @@
-﻿
-
-namespace MormorDagnysBageri.Entities;
+﻿namespace MormorDagnysBageri.Entities;
 
 public record Supplier
 {

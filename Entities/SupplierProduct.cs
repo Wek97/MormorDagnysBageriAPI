@@ -1,6 +1,4 @@
-﻿using MormorDagnysBageri.Entities;
-
-namespace MormorDagnysBageri;
+﻿namespace MormorDagnysBageri.Entities;
 
 public class SupplierProduct
 {
